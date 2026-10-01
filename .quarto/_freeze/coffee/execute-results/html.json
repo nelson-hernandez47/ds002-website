@@ -1,0 +1,17 @@
+{
+  "hash": "696572802acd7317641e6624e87a617f",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Coffee Ratings\"\ndescription: |\n  How do professional coffee ratings vary by country of origin? An analysis of TidyTuesday data.\nauthor: Nelson Hernandez Ubeda\ndate: September 30, 2026\nformat:\n  html:\n    code-fold: true\nexecute:\n  message: false\n  warning: false\n---\n\n## The data\n\nThis analysis uses the TidyTuesday dataset from July 7, 2020. It contains reviews of coffee beans by trained graders at the Coffee Quality Institute. Each row is one rated batch of beans. Along with the bean's origin, species, and processing method, the data records scores for attributes like aroma, flavor, and acidity. Those scores add up to a total \"cup points\" rating out of 100.\n\nThe plot below compares total cup points across countries of origin. I only included countries with at least 25 rated batches, so that each box is based on a reasonable number of ratings. I also removed one batch with a recorded score of 0.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\ncoffee_ratings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-07/coffee_ratings.csv')\n```\n:::\n\n\n## Ratings by country of origin\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncoffee_ratings |>\n  filter(total_cup_points > 0, !is.na(country_of_origin)) |>\n  group_by(country_of_origin) |>\n  filter(n() >= 25) |>\n  ungroup() |>\n  mutate(country_of_origin = fct_reorder(country_of_origin, total_cup_points, .fun = median)) |>\n  ggplot(aes(x = total_cup_points, y = country_of_origin)) +\n  geom_boxplot(fill = \"#e8d5c0\", outlier.alpha = 0.4) +\n  labs(\n    title = \"Coffee Quality Institute ratings by country of origin\",\n    x = \"Total cup points (out of 100)\",\n    y = NULL,\n    caption = \"Data: Coffee Quality Institute, via James LeDoux and TidyTuesday\"\n  ) +\n  theme_minimal()\n```\n\n::: {.cell-output-display}\n![](coffee_files/figure-html/unnamed-chunk-2-1.png){fig-alt='Boxplots of total cup points for each country of origin with at least 25 rated coffee batches, ordered by median rating.' width=672}\n:::\n:::\n\n\nCountries are ordered by median rating. Each box shows the middle 50% of rated batches from that country.\n\n## Sources\n\n**TidyTuesday:** R for Data Science Online Learning Community (2020). *Coffee Ratings*, TidyTuesday, July 7, 2020. <https://github.com/rfordatascience/tidytuesday/blob/main/data/2020/2020-07-07/readme.md>\n\n**Original data:** Coffee Quality Institute coffee review pages, scraped in January 2018 by James LeDoux. LeDoux, J. (2018). *Coffee Quality Database* \\[Data set\\]. GitHub. <https://github.com/jldbc/coffee-quality-database>. Ratings by the Coffee Quality Institute, <https://www.coffeeinstitute.org>.\n",
+    "supporting": [
+      "coffee_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

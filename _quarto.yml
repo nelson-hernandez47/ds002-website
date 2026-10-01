@@ -1,0 +1,32 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Nelson Hernandez Ubeda"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: "Data Viz"
+        menu:
+          - text: "Palm Trees"
+            href: palmtrees.qmd
+          - text: "Coffee Ratings"
+            href: coffee.qmd
+    right:
+      - icon: github
+        href: https://github.com/nelson-hernandez47/ds002-website
+        aria-label: Source code for this site on GitHub
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+
+execute:
+  message: false
+  warning: false

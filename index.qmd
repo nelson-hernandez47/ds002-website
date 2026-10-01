@@ -1,0 +1,46 @@
+---
+title: "Nelson Hernandez Ubeda"
+image: images/profile.jpg
+toc: false
+about:
+  template: trestles
+  image-shape: round
+  image-width: 15em
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/nelson-hernandez47
+      target: _blank
+    - icon: code-slash
+      text: Site source code
+      href: https://github.com/nelson-hernandez47/ds002-website
+      target: _blank
+    - icon: envelope
+      text: Email
+      href: mailto:njhernandez454@gmail.com
+---
+
+I'm a mathematics major with a minor in data science at Pomona College (class of 2028). I work as a research assistant at STATSLab at Claremont McKenna College, tutor at Pomona's Quantitative Skills Center, and a mentor for multiple courses. I speak Spanish (native fluency), English (bilingual fluency), and French (advanced).
+
+## Education
+
+**Pomona College**, Claremont, CA\
+B.A. in Mathematics, minor in Data Science, expected 2028
+
+## Experience
+
+## Experience
+
+**Research Assistant**, STATSLab, Claremont McKenna College
+
+**Partner (Tutor)**, Quantitative Skills Center, Pomona College
+
+**Mentor**, ISMP
+
+**Mentor**, PHYS 070, Pomona College
+
+**Mentor**, MATH 030, Pomona College
+
+## About this site
+
+This site was built with [Quarto](https://quarto.org) and is hosted on GitHub Pages. The code that builds it is on [GitHub](https://github.com/nelson-hernandez47/ds002-website). Under **Data Viz** you'll find two short analyses of [TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets.

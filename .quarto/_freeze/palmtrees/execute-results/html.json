@@ -1,0 +1,17 @@
+{
+  "hash": "1a4fec6ce1353e56278d9f92be8e9f21",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Palm Trees\"\ndescription: |\n  How tall do palms grow? Comparing maximum stem height across palm subfamilies, using TidyTuesday data.\nauthor: Nelson Hernandez Ubeda\ndate: September 30, 2026\nformat:\n  html:\n    code-fold: true\nexecute:\n  message: false\n  warning: false\n---\n\n## The data\n\nThis analysis uses the TidyTuesday dataset from March 18, 2025, which comes from PalmTraits 1.0, a global database of functional traits for palm species (family Arecaceae). Each row is one palm species. The columns describe its growth form, stem and leaf measurements, and fruit characteristics.\n\nPalms come in very different sizes. Some have no visible stem at all, and others grow into tall canopy trees. The plot below compares the maximum recorded stem height of each species across the palm subfamilies. Because heights range from well under a meter to tens of meters, the x-axis uses a log scale.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\npalmtrees <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-18/palmtrees.csv')\n```\n:::\n\n\n## Stem height by subfamily\n\n\n::: {.cell}\n\n```{.r .cell-code}\npalmtrees |>\n  filter(!is.na(max_stem_height_m), max_stem_height_m > 0, !is.na(palm_subfamily)) |>\n  mutate(palm_subfamily = fct_reorder(palm_subfamily, max_stem_height_m, .fun = median)) |>\n  ggplot(aes(x = max_stem_height_m, y = palm_subfamily)) +\n  geom_boxplot(outlier.shape = NA, fill = \"#cfe3c4\") +\n  geom_jitter(height = 0.15, alpha = 0.25, size = 1) +\n  scale_x_log10() +\n  labs(\n    title = \"Maximum stem height of palm species, by subfamily\",\n    x = \"Maximum stem height (meters, log scale)\",\n    y = NULL,\n    caption = \"Data: PalmTraits 1.0 (Kissling et al., 2019), via TidyTuesday\"\n  ) +\n  theme_minimal()\n```\n\n::: {.cell-output-display}\n![](palmtrees_files/figure-html/unnamed-chunk-2-1.png){fig-alt='Boxplots of maximum stem height in meters, on a log scale, for each palm subfamily, with one dot per species.' width=672}\n:::\n:::\n\n\nEach dot is one species, and each box shows the middle 50% of species in that subfamily. Subfamilies are ordered by median height.\n\n## Sources\n\n**TidyTuesday:** R for Data Science Online Learning Community (2025). *Palm Trees*, TidyTuesday, March 18, 2025. Curated by Lydia Gibson. <https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-03-18/readme.md>\n\n**Original data:** Kissling, W. D., Balslev, H., Baker, W. J., et al. (2019). PalmTraits 1.0, a species-level functional trait database of palms worldwide. *Scientific Data*, 6, 178. <https://doi.org/10.1038/s41597-019-0189-0>\n\nThe data reached TidyTuesday through the [`palmtrees`](https://github.com/EmilHvitfeldt/palmtrees) R package by Emil Hvitfeldt.\n",
+    "supporting": [
+      "palmtrees_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

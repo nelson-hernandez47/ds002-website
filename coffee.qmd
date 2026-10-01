@@ -1,0 +1,54 @@
+---
+title: "Coffee Ratings"
+description: |
+  How do professional coffee ratings vary by country of origin? An analysis of TidyTuesday data.
+author: Nelson Hernandez Ubeda
+date: September 30, 2026
+format:
+  html:
+    code-fold: true
+execute:
+  message: false
+  warning: false
+---
+
+## The data
+
+This analysis uses the TidyTuesday dataset from July 7, 2020. It contains reviews of coffee beans by trained graders at the Coffee Quality Institute. Each row is one rated batch of beans. Along with the bean's origin, species, and processing method, the data records scores for attributes like aroma, flavor, and acidity. Those scores add up to a total "cup points" rating out of 100.
+
+The plot below compares total cup points across countries of origin. I only included countries with at least 25 rated batches, so that each box is based on a reasonable number of ratings. I also removed one batch with a recorded score of 0.
+
+```{r}
+library(tidyverse)
+
+coffee_ratings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-07/coffee_ratings.csv')
+```
+
+## Ratings by country of origin
+
+```{r}
+#| fig-alt: "Boxplots of total cup points for each country of origin with at least 25 rated coffee batches, ordered by median rating."
+coffee_ratings |>
+  filter(total_cup_points > 0, !is.na(country_of_origin)) |>
+  group_by(country_of_origin) |>
+  filter(n() >= 25) |>
+  ungroup() |>
+  mutate(country_of_origin = fct_reorder(country_of_origin, total_cup_points, .fun = median)) |>
+  ggplot(aes(x = total_cup_points, y = country_of_origin)) +
+  geom_boxplot(fill = "#e8d5c0", outlier.alpha = 0.4) +
+  labs(
+    title = "Coffee Quality Institute ratings by country of origin",
+    x = "Total cup points (out of 100)",
+    y = NULL,
+    caption = "Data: Coffee Quality Institute, via James LeDoux and TidyTuesday"
+  ) +
+  theme_minimal()
+```
+
+Countries are ordered by median rating. Each box shows the middle 50% of rated batches from that country.
+
+## Sources
+
+**TidyTuesday:** R for Data Science Online Learning Community (2020). *Coffee Ratings*, TidyTuesday, July 7, 2020. <https://github.com/rfordatascience/tidytuesday/blob/main/data/2020/2020-07-07/readme.md>
+
+**Original data:** Coffee Quality Institute coffee review pages, scraped in January 2018 by James LeDoux. LeDoux, J. (2018). *Coffee Quality Database* \[Data set\]. GitHub. <https://github.com/jldbc/coffee-quality-database>. Ratings by the Coffee Quality Institute, <https://www.coffeeinstitute.org>.

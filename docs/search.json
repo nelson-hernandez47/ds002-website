@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "palmtrees.html",
+    "href": "palmtrees.html",
+    "title": "Palm Trees",
+    "section": "",
+    "text": "This analysis uses the TidyTuesday dataset from March 18, 2025, which comes from PalmTraits 1.0, a global database of functional traits for palm species (family Arecaceae). Each row is one palm species. The columns describe its growth form, stem and leaf measurements, and fruit characteristics.\nPalms come in very different sizes. Some have no visible stem at all, and others grow into tall canopy trees. The plot below compares the maximum recorded stem height of each species across the palm subfamilies. Because heights range from well under a meter to tens of meters, the x-axis uses a log scale.\n\n\nCode\nlibrary(tidyverse)\n\npalmtrees &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-18/palmtrees.csv')"
+  },
+  {
+    "objectID": "palmtrees.html#the-data",
+    "href": "palmtrees.html#the-data",
+    "title": "Palm Trees",
+    "section": "",
+    "text": "This analysis uses the TidyTuesday dataset from March 18, 2025, which comes from PalmTraits 1.0, a global database of functional traits for palm species (family Arecaceae). Each row is one palm species. The columns describe its growth form, stem and leaf measurements, and fruit characteristics.\nPalms come in very different sizes. Some have no visible stem at all, and others grow into tall canopy trees. The plot below compares the maximum recorded stem height of each species across the palm subfamilies. Because heights range from well under a meter to tens of meters, the x-axis uses a log scale.\n\n\nCode\nlibrary(tidyverse)\n\npalmtrees &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-18/palmtrees.csv')"
+  },
+  {
+    "objectID": "palmtrees.html#stem-height-by-subfamily",
+    "href": "palmtrees.html#stem-height-by-subfamily",
+    "title": "Palm Trees",
+    "section": "Stem height by subfamily",
+    "text": "Stem height by subfamily\n\n\nCode\npalmtrees |&gt;\n  filter(!is.na(max_stem_height_m), max_stem_height_m &gt; 0, !is.na(palm_subfamily)) |&gt;\n  mutate(palm_subfamily = fct_reorder(palm_subfamily, max_stem_height_m, .fun = median)) |&gt;\n  ggplot(aes(x = max_stem_height_m, y = palm_subfamily)) +\n  geom_boxplot(outlier.shape = NA, fill = \"#cfe3c4\") +\n  geom_jitter(height = 0.15, alpha = 0.25, size = 1) +\n  scale_x_log10() +\n  labs(\n    title = \"Maximum stem height of palm species, by subfamily\",\n    x = \"Maximum stem height (meters, log scale)\",\n    y = NULL,\n    caption = \"Data: PalmTraits 1.0 (Kissling et al., 2019), via TidyTuesday\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nEach dot is one species, and each box shows the middle 50% of species in that subfamily. Subfamilies are ordered by median height."
+  },
+  {
+    "objectID": "palmtrees.html#sources",
+    "href": "palmtrees.html#sources",
+    "title": "Palm Trees",
+    "section": "Sources",
+    "text": "Sources\nTidyTuesday: R for Data Science Online Learning Community (2025). Palm Trees, TidyTuesday, March 18, 2025. Curated by Lydia Gibson. https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-03-18/readme.md\nOriginal data: Kissling, W. D., Balslev, H., Baker, W. J., et al. (2019). PalmTraits 1.0, a species-level functional trait database of palms worldwide. Scientific Data, 6, 178. https://doi.org/10.1038/s41597-019-0189-0\nThe data reached TidyTuesday through the palmtrees R package by Emil Hvitfeldt."
+  },
+  {
+    "objectID": "coffee.html",
+    "href": "coffee.html",
+    "title": "Coffee Ratings",
+    "section": "",
+    "text": "This analysis uses the TidyTuesday dataset from July 7, 2020. It contains reviews of coffee beans by trained graders at the Coffee Quality Institute. Each row is one rated batch of beans. Along with the bean’s origin, species, and processing method, the data records scores for attributes like aroma, flavor, and acidity. Those scores add up to a total “cup points” rating out of 100.\nThe plot below compares total cup points across countries of origin. I only included countries with at least 25 rated batches, so that each box is based on a reasonable number of ratings. I also removed one batch with a recorded score of 0.\n\n\nCode\nlibrary(tidyverse)\n\ncoffee_ratings &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-07/coffee_ratings.csv')"
+  },
+  {
+    "objectID": "coffee.html#the-data",
+    "href": "coffee.html#the-data",
+    "title": "Coffee Ratings",
+    "section": "",
+    "text": "This analysis uses the TidyTuesday dataset from July 7, 2020. It contains reviews of coffee beans by trained graders at the Coffee Quality Institute. Each row is one rated batch of beans. Along with the bean’s origin, species, and processing method, the data records scores for attributes like aroma, flavor, and acidity. Those scores add up to a total “cup points” rating out of 100.\nThe plot below compares total cup points across countries of origin. I only included countries with at least 25 rated batches, so that each box is based on a reasonable number of ratings. I also removed one batch with a recorded score of 0.\n\n\nCode\nlibrary(tidyverse)\n\ncoffee_ratings &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-07/coffee_ratings.csv')"
+  },
+  {
+    "objectID": "coffee.html#ratings-by-country-of-origin",
+    "href": "coffee.html#ratings-by-country-of-origin",
+    "title": "Coffee Ratings",
+    "section": "Ratings by country of origin",
+    "text": "Ratings by country of origin\n\n\nCode\ncoffee_ratings |&gt;\n  filter(total_cup_points &gt; 0, !is.na(country_of_origin)) |&gt;\n  group_by(country_of_origin) |&gt;\n  filter(n() &gt;= 25) |&gt;\n  ungroup() |&gt;\n  mutate(country_of_origin = fct_reorder(country_of_origin, total_cup_points, .fun = median)) |&gt;\n  ggplot(aes(x = total_cup_points, y = country_of_origin)) +\n  geom_boxplot(fill = \"#e8d5c0\", outlier.alpha = 0.4) +\n  labs(\n    title = \"Coffee Quality Institute ratings by country of origin\",\n    x = \"Total cup points (out of 100)\",\n    y = NULL,\n    caption = \"Data: Coffee Quality Institute, via James LeDoux and TidyTuesday\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nCountries are ordered by median rating. Each box shows the middle 50% of rated batches from that country."
+  },
+  {
+    "objectID": "coffee.html#sources",
+    "href": "coffee.html#sources",
+    "title": "Coffee Ratings",
+    "section": "Sources",
+    "text": "Sources\nTidyTuesday: R for Data Science Online Learning Community (2020). Coffee Ratings, TidyTuesday, July 7, 2020. https://github.com/rfordatascience/tidytuesday/blob/main/data/2020/2020-07-07/readme.md\nOriginal data: Coffee Quality Institute coffee review pages, scraped in January 2018 by James LeDoux. LeDoux, J. (2018). Coffee Quality Database [Data set]. GitHub. https://github.com/jldbc/coffee-quality-database. Ratings by the Coffee Quality Institute, https://www.coffeeinstitute.org."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Nelson Hernandez Ubeda",
+    "section": "",
+    "text": "I’m a mathematics major with a minor in data science at Pomona College (class of 2028). I work as a research assistant at STATSLab at Claremont McKenna College, tutor at Pomona’s Quantitative Skills Center, and a mentor for multiple courses. I speak Spanish (native fluency), English (bilingual fluency), and French (advanced)."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Nelson Hernandez Ubeda",
+    "section": "Education",
+    "text": "Education\nPomona College, Claremont, CA\nB.A. in Mathematics, minor in Data Science, expected 2028"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Nelson Hernandez Ubeda",
+    "section": "Experience",
+    "text": "Experience"
+  },
+  {
+    "objectID": "index.html#experience-1",
+    "href": "index.html#experience-1",
+    "title": "Nelson Hernandez Ubeda",
+    "section": "Experience",
+    "text": "Experience\nResearch Assistant, STATSLab, Claremont McKenna College\nPartner (Tutor), Quantitative Skills Center, Pomona College\nMentor, ISMP\nMentor, PHYS 070, Pomona College\nMentor, MATH 030, Pomona College"
+  },
+  {
+    "objectID": "index.html#about-this-site",
+    "href": "index.html#about-this-site",
+    "title": "Nelson Hernandez Ubeda",
+    "section": "About this site",
+    "text": "About this site\nThis site was built with Quarto and is hosted on GitHub Pages. The code that builds it is on GitHub. Under Data Viz you’ll find two short analyses of TidyTuesday datasets."
+  }
+]
