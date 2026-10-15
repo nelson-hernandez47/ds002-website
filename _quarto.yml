@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Nelson Hernandez Ubeda"
+  title: "Nelson Hernandez"
   navbar:
     left:
       - href: index.qmd
@@ -14,6 +14,8 @@ website:
             href: palmtrees.qmd
           - text: "Coffee Ratings"
             href: coffee.qmd
+          - text: "The Office"
+            href: theoffice.qmd
     right:
       - icon: github
         href: https://github.com/nelson-hernandez47/ds002-website
