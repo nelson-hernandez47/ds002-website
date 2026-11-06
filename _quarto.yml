@@ -1,7 +1,7 @@
 project:
   type: website
   output-dir: docs
-
+ 
 website:
   title: "Nelson Hernandez"
   navbar:
@@ -16,11 +16,13 @@ website:
             href: coffee.qmd
           - text: "The Office"
             href: theoffice.qmd
+          - text: "The Office Writers"
+            href: officewriters.qmd
     right:
       - icon: github
         href: https://github.com/nelson-hernandez47/ds002-website
         aria-label: Source code for this site on GitHub
-
+ 
 format:
   html:
     theme:
@@ -28,7 +30,8 @@ format:
       dark: darkly
     css: styles.css
     toc: true
-
+ 
 execute:
   message: false
   warning: false
+ 
